@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="node_modules/react/umd/react.development.js"></script>
+    <script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div>
+        <h1>Checkerboard Display App</h1>
+        <button onclick="promptForRow()" >Enter number of rows</button>
+    </div>
+    <div id="app"></div>
+    <script>
+        function promptForRow() {
+            var inputRows = prompt("Please enter the number of rows for your checkerboard");
+            ReactDOM.render(CheckerBoard({rowsData: inputRows}), document.getElementById('app'));
+        }
+        function Cell(props) {
+            const {style} = props;
+            return React.createElement('div', {style});
+        }
+        function Row(props) {
+            const {style, rows} = props;
+            var cellsArray = [];
+            for (var i = 1; i <= rows; i++) {
+                if (i % 2 == 1) {
+                    cellsArray.push(React.createElement(Cell, {style: {height: '20px', width: '20px', display:'inline-block', backgroundColor: 'black'}}));
+                } else {
+                    cellsArray.push(React.createElement(Cell, {style: {height: '20px', width: '20px', display:'inline-block', backgroundColor: 'red'}}));
+                }
+            }
+            return React.createElement('div', {style}, cellsArray);
+        }
+        function ReversedRow(props) {
+            const {style, rows} = props;
+            var cellsArray = [];
+            for (var i = 1; i <= rows; i++) {
+                if (i % 2 == 1) {
+                    cellsArray.push(React.createElement(Cell, {style: {height: '20px', width: '20px', display:'inline-block', backgroundColor: 'red'}}));
+                } else {
+                    cellsArray.push(React.createElement(Cell, {style: {height: '20px', width: '20px', display:'inline-block', backgroundColor: 'black'}}));
+                }
+            }
+            return React.createElement('div', {style}, cellsArray);
+        }
+        function CheckerBoard(props) {
+            var {rowsData} = props;
+            var allRows = [];
+            for (var i = 1; i <= rowsData; i++) {
+                if (i % 2 == 1) {
+                    allRows.push(React.createElement(Row, {style: {height: '20px'}, rows: rowsData} ));
+                } else {
+                    allRows.push(React.createElement(ReversedRow, {style: {height: '20px'}, rows: rowsData} ));
+                }
+            }
+            return React.createElement('div', null, allRows);
+        }
+    </script>
+</body>
+</html>
